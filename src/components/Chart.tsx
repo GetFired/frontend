@@ -1,0 +1,1 @@
+import ApexCharts from 'apexcharts'
