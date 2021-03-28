@@ -6,6 +6,7 @@ import OutputColumn from './outputs/OutputColumn';
 
 function App() : JSX.Element {
   const [vizData, setVizData] = useState<object>({});
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
   return (
     <div className="App">
@@ -15,7 +16,7 @@ function App() : JSX.Element {
         {/* <span className="Punch">For 90,000 Hours</span> */}
       </div>
       <div className="content-block">
-          <InputColumn />
+          <InputColumn setLoadedCallback={setIsLoaded} setDataCallback={setVizData}/>
           <OutputColumn />
       </div>
     </div>

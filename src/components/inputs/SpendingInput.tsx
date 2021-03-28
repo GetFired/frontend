@@ -34,14 +34,14 @@ const SpendingInput = (props: IProps): JSX.Element => {
         setCategories([
             {label:'total', spending:lumpSum}
         ]);
-    }, [usingMonthlyLump]);
+    }, [setCategories]);
 
     // Add a new category
     const addCategory = useCallback((): void => {
         let newCats = categories.slice();
         newCats.push(DefaultCategory());
         setCategories(newCats);
-    }, [categories]);
+    }, [categories, setCategories]);
 
     // Update the values for a category
     const updateCategory: ICategoryCallback = useCallback(
@@ -58,7 +58,7 @@ const SpendingInput = (props: IProps): JSX.Element => {
             setMonthlySpending(newSpending);
             setUsingLump(false);
         },
-        [categories]
+        [categories, setCategories]
     );
 
     // Build table of spending categories

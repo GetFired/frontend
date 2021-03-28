@@ -41,14 +41,14 @@ const SpendingCategory = (props: IProps): JSX.Element => {
         (newValue: number): void => {
             category.spending = newValue;
             callback(category, idx);
-        }, [callback, idx]
+        }, [callback, idx, category]
     );
 
     const updateLabel = useCallback(
         (e: React.ChangeEvent<HTMLInputElement>): void => {
             category.label = e.target.value;
             callback(category, idx);
-        }, [callback, idx]
+        }, [callback, idx, category]
     );
 
 

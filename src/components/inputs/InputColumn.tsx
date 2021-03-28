@@ -10,7 +10,24 @@ const defaultAPIParams = buildRetirementArguments(DefaultFireParams);
 
 const ApiEndpoint = "https://get-fired.ue.r.appspot.com/";
 
-const InputColumn = (): JSX.Element => {
+interface IProps {
+    setLoadedCallback: (loaded: boolean) => void;
+    setDataCallback: (data: object) => void;
+}
+
+function buildCategoryQuery(categories: ISpendingCategory[]) {
+    let queryString: string = "";
+
+    for(let idx in categories) {
+        let cat = categories[idx];
+        let label = cat.label.length > 0 ? cat.label : "category"+idx;
+        queryString += '&categories=' + label + "&expenses=" + cat.spending;
+    }
+
+    return queryString;
+}
+
+const InputColumn = (props: IProps): JSX.Element => {
     // const [monthlySpending, setMonthlySpending] = useState<any[]>([["Total", 0]]);
     const [spendingCategories, setCategories] = useState<ISpendingCategory[]>([DefaultCategory()]);
 
@@ -34,7 +51,7 @@ const InputColumn = (): JSX.Element => {
         console.log(spendingCategories);
 
         let query = nonSpendingArguments.map(el => el[0] + '=' + el[1]).join('&');
-        query += spendingCategories.map(cat => 'categories=' + cat.label + '&' + 'expenses=' + cat.spending).join('&');
+        query += buildCategoryQuery(spendingCategories);
         let queryUrl = ApiEndpoint + "month?" + query;
         console.log('querying:',queryUrl);
         fetch(queryUrl)
@@ -45,10 +62,8 @@ const InputColumn = (): JSX.Element => {
                     //   setIsLoaded(true);
                     //   setItems(result);
                 },
-                // Note: it's important to handle errors here
-                // instead of a catch() block so that we don't swallow
-                // exceptions from actual bugs in components.
                 (error) => {
+                    console.log(error);
                     //   setIsLoaded(true);
                     //   setError(error);
                 }
