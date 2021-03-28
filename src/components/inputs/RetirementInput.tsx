@@ -13,7 +13,7 @@ const retirementLabels = [
 ];
 
 // the API endpoints corresponding to each retirement label/field
-const apiEndpoints = [
+export const apiEndpoints = [
     "income",
     "assets",
     "retirement_expenses",
@@ -22,27 +22,29 @@ const apiEndpoints = [
     "withdraw",
 ];
 
-const NUM_TO_SHOW: number = 3;
+const NUM_TO_SHOW: number = 2;
 
 type IFireParams = number[];
-const DefaultFireParams: IFireParams = [0, 0, 100, 0, 6, 3];
+export const DefaultFireParams: IFireParams = [0, 0, 100, 1, 6, 3];
 
 
 interface IProps {
-    updateArgs: (args: any[] )=> void;
+    updateArgs: (args: any[]) => void;
 }
 
 
-function buildRetirementArguments(retirementValues: number[]): any[] {
+export function buildRetirementArguments(retirementValues: number[]): any[] {
     let args: any[] = [];
-    for(let i = 0; i < apiEndpoints.length; i++) {
-        args.push([apiEndpoints[i],retirementValues[i]]);
+    for (let i = 0; i < apiEndpoints.length; i++) {
+        let value = retirementLabels[i][1] == '%' ? retirementValues[i] / 100 : retirementValues[i];
+        args.push([apiEndpoints[i], value]);
     }
     return args;
 }
 
-const RetirementInput = (props:IProps): JSX.Element => {
-    const {updateArgs} = props;
+
+const RetirementInput = (props: IProps): JSX.Element => {
+    const { updateArgs } = props;
 
     const [retirementValues, setRetValues] = useState<number[]>(DefaultFireParams);
     const [isExpanded, setExpanded] = useState<boolean>(false);
@@ -88,10 +90,10 @@ const RetirementInput = (props:IProps): JSX.Element => {
             }
             <div className="inline-button-text">
                 <button
-                    className="expand-button"
+                    className="base-button expand-button"
                     onClick={expandCallback}>
-                    +
-            </button>
+                    {isExpanded ? '-' : '+'}
+                </button>
                 <span className="input-label">   Additional settings</span>
             </div>
 

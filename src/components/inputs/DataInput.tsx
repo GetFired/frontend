@@ -17,16 +17,18 @@ interface IProps {
     idx: number;
     callback: IOnUpdateCallback;
     formPrefix?: string;
+    disabled?: boolean;
 }
 
 const DataInput = (props: IProps): JSX.Element => {
-    const { label, value, idx, callback, formPrefix = "$" } = props;
+    const { label, value, idx, callback, formPrefix = "$", disabled=false} = props;
     //TODO: should value be a state variable in the lower forms?
 
     // const [value, setValue] = useState<number>();
 
     const handleUpdate = useCallback(
         (newValue: number): void => {
+            if(!disabled)
                 callback(newValue, idx);
         }, [callback, idx]
     );
@@ -34,7 +36,7 @@ const DataInput = (props: IProps): JSX.Element => {
     var inputForm: JSX.Element;
     switch(formPrefix) {
         case '%':
-            inputForm=<PercentInput value={value} callback={handleUpdate}/>;
+            inputForm=<PercentInput value={value} callback={handleUpdate} length={4}/>;
             break;
         case '$':
             default:

@@ -4,12 +4,13 @@ import '../App.css';
 interface IProps {
     value: number;
     callback: any;
+    length?: number;
 }
 
 const unit: string = "$";
 
 const MoneyInput = (props: IProps): JSX.Element => {
-    const { value, callback} = props;
+    const { value, callback, length=10} = props;
 
     // const [value, setValue] = useState<number>();
 
@@ -25,9 +26,9 @@ const MoneyInput = (props: IProps): JSX.Element => {
 
     return (
         <input
-            className="number-input"
+            className="input-field"
             type="text"
-            size={10}
+            size={length}
             maxLength={10}
             value={unit+value}
             onChange={handleUpdate}

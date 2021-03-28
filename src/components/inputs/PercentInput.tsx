@@ -5,12 +5,13 @@ import '../App.css'
 interface IProps {
     value: number;
     callback: any;
+    length?: number;
 }
 
 const unit: string = "%";
 
 const PercentInput = (props: IProps): JSX.Element => {
-    const { value, callback } = props;
+    const { value, callback, length=10 } = props;
     const [usrIn, setUsrIn] = useState<string>();
 
     if(usrIn == null) {
@@ -29,9 +30,9 @@ const PercentInput = (props: IProps): JSX.Element => {
     );
     return (
         <input
-            className="number-input"
+            className="input-field"
             type="text"
-            size={10}
+            size={length}
             maxLength={5}
             value={usrIn + unit}
             onChange={handleUpdate}

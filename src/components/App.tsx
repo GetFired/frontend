@@ -1,9 +1,12 @@
+import { useState } from 'react';
 import './App.css';
 
 import InputColumn from './inputs/InputColumn';
 import OutputColumn from './outputs/OutputColumn';
 
 function App() : JSX.Element {
+  const [vizData, setVizData] = useState<object>({});
+
   return (
     <div className="App">
       <div className="App-header">
