@@ -10,8 +10,15 @@ const defaultAPIParams = buildRetirementArguments(DefaultFireParams);
 
 const ApiEndpoint = "https://get-fired.ue.r.appspot.com/";
 
+export enum DataStatus {
+    Empty,
+    Loading,
+    Loaded,
+    Error
+}
+
 interface IProps {
-    setLoadedCallback: (loaded: boolean) => void;
+    setLoadedCallback: (loaded: number) => void;
     setDataCallback: (data: object) => void;
 }
 
@@ -27,10 +34,23 @@ function buildCategoryQuery(categories: ISpendingCategory[]) {
     return queryString;
 }
 
-const InputColumn = (props: IProps): JSX.Element => {
-    // const [monthlySpending, setMonthlySpending] = useState<any[]>([["Total", 0]]);
-    const [spendingCategories, setCategories] = useState<ISpendingCategory[]>([DefaultCategory()]);
+function getMonthlyExpenses(categories: ISpendingCategory[]) {
+    let totalExp = 0;
+    for(let cat of categories) {
+        totalExp += cat.spending;
+    }
+    
+    return totalExp;
+}
 
+function pullData(spendingCategories: ISpendingCategory[], nonSpendingArguments: any[]) {
+
+}
+
+const InputColumn = (props: IProps): JSX.Element => {
+    const {setLoadedCallback, setDataCallback} = props;
+
+    const [spendingCategories, setCategories] = useState<ISpendingCategory[]>([DefaultCategory()]);
     const [nonSpendingArguments, setNonSpendingArgs] = useState<any[]>(defaultAPIParams);
 
     // updates retirement parameters
@@ -46,28 +66,34 @@ const InputColumn = (props: IProps): JSX.Element => {
 
 
     const submitCallback = useCallback((): void => {
+        setLoadedCallback(DataStatus.Loading);
+        
         console.log("submitted");
         console.log(nonSpendingArguments);
         console.log(spendingCategories);
 
         let query = nonSpendingArguments.map(el => el[0] + '=' + el[1]).join('&');
-        query += buildCategoryQuery(spendingCategories);
-        let queryUrl = ApiEndpoint + "month?" + query;
-        console.log('querying:',queryUrl);
-        fetch(queryUrl)
+        let categoryQuery = buildCategoryQuery(spendingCategories);
+        let expensesQuery = '&curr_expenses='+ (getMonthlyExpenses(spendingCategories) * 12);
+
+        let breakDownQuery = ApiEndpoint + "month?" + query + categoryQuery;
+        console.log('querying:',breakDownQuery);
+        
+        fetch(breakDownQuery)
             .then(res => res.json())
             .then(
                 (result) => {
-                    console.log(result)
-                    //   setIsLoaded(true);
-                    //   setItems(result);
+                    console.log("result1:", result)
+                    setDataCallback(result);
+                    setLoadedCallback(DataStatus.Loaded);
                 },
                 (error) => {
-                    console.log(error);
-                    //   setIsLoaded(true);
-                    //   setError(error);
+                    console.log("err1:",error);
+                    setLoadedCallback(DataStatus.Error);
                 }
             );
+        
+       
     }, [nonSpendingArguments, spendingCategories]);
 
     return (

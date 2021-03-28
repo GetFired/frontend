@@ -2,24 +2,38 @@
 import Chart from "react-apexcharts";
 import useWindowDimensions from "../helper/WindowDims"
 
-//
+interface IProps {
+  graphData: number[];
+}
 
-const AssetChart = (): JSX.Element => {
+const AssetChart = (prop: IProps): JSX.Element => {
+  const {graphData} = prop;
+
   var state = {
+    
     options: {
-      chart: {
-        id: "basic-bar",
+      dataLabels: {
+        enabled: false,
       },
       xaxis: {
-        categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999]
+        categories: graphData[0],
       },
-      // colors: ['']
+      yaxis: {
+        decimalsInFloat: 0,
+        forceNiceScale: true,
+        
+      tooltip: {
+          enabled: true,
+          offsetX: 0,
+      },
+      
+      },
       colors: ['#EF6458','#F4C63D','#D70206',],
     },
     series: [
       {
         name: "series-1",
-        data: [30, 40, 45, 50, 49, 60, 70, 91]
+        data: graphData[1],
       }
     ]
   };

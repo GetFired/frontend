@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import './App.css';
 
-import InputColumn from './inputs/InputColumn';
+import InputColumn, {DataStatus} from './inputs/InputColumn';
 import OutputColumn from './outputs/OutputColumn';
+
+
 
 function App() : JSX.Element {
   const [vizData, setVizData] = useState<object>({});
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const [isLoaded, setIsLoaded] = useState<DataStatus>(DataStatus.Empty);
 
   return (
     <div className="App">
@@ -17,7 +19,7 @@ function App() : JSX.Element {
       </div>
       <div className="content-block">
           <InputColumn setLoadedCallback={setIsLoaded} setDataCallback={setVizData}/>
-          <OutputColumn />
+          <OutputColumn data={vizData} dataStatus={isLoaded}/>
       </div>
     </div>
   );

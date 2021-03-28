@@ -196,6 +196,15 @@ body {
   flex-grow: 4;
 }
 
+.no-output-block {
+  display:flex;
+  align-items: center;
+  justify-items: center;
+  flex: 1;
+  height:100%;
+  width: 100%;
+}
+
 .retirement-header {
   vertical-align: top;
   /* display:flex; */

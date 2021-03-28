@@ -25,7 +25,7 @@ export const apiEndpoints = [
 const NUM_TO_SHOW: number = 2;
 
 type IFireParams = number[];
-export const DefaultFireParams: IFireParams = [0, 0, 100, 1, 6, 3];
+export const DefaultFireParams: IFireParams = [0, 0, 100, 5, 6, 4];
 
 
 interface IProps {
