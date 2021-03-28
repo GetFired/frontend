@@ -1,12 +1,12 @@
-import React, { useState, useCallback } from "react";
+// import React, { useState, useCallback } from "react";
 
 import '../App.css';
 
 
 const SpendingInput = (): JSX.Element => {
-    return (<div>
+    return (<div className="input-box">
         <h1>more forms, bitch</h1>
-        </div>);
+    </div>);
 }
 
 export default SpendingInput;

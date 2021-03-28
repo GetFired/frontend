@@ -1,6 +1,8 @@
 body {
   background-color: #ffffff;
-  background-image: url("https://www.transparenttextures.com/patterns/concrete-wall.png");
+  background-image: url("https://www.transparenttextures.com/patterns/cream-dust.png");
+  /* background-image: url("https://www.transparenttextures.com/patterns/blizzard.png"); */
+  /* background-image: url("https://www.transparenttextures.com/patterns/concrete-wall.png"); */
 }
 
 .App {
@@ -17,8 +19,6 @@ body {
 /*
 
 */
-
-
 
 .App-header {
   display: flex;
@@ -48,6 +48,7 @@ body {
 .content-block {
   display:flex;
   flex-wrap: wrap;
+  /* margin: 0 1%; */
 
   /* flex-flow: row; */
   justify-content: space-evenly;
@@ -55,23 +56,145 @@ body {
   align-content: stretch;
 }
 
+
+
+/*
+====================
+====================
+     Input Block
+====================
+*/
+
 .input-block {
  /* float: left; */
- margin-left: 50px;
+ /* margin-left: 50px; */
  margin-top: 14px;
  justify-items: flex-start;
+ /* align-items: center; */
+ text-align: center;
 }
 
 .input-box {
-  border: 2px solid #000000;
-  border-radius: 8px;
+  border: 2px solid black;
+  border-radius: 4px;
+
+  /* background-color: #eef0f7; */
 
   min-width: 320px;
   width: auto;
   padding: 1vh;
   margin: 1vh;
+
+  display:flex;
+  flex-flow: column nowrap;
 }
 
+.fire-input {
+  /* padding: 100px; */
+  /* border-collapse:separate;  */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-bottom: 16px;
+  /* border-spacing: 100px 100px; */
+}
+
+.input-label{
+  /* display: flex; */
+  /* flex-flow: column nowrap; */
+  color: #242D4C;
+  font-size: larger;
+  font-weight: bolder;
+  text-align: right;
+}
+
+.number-input{
+  border: 2px solid #242D4C;
+  /* background-color: #eef0f7 ; */
+  border-radius: 10px;
+  
+  /* size:3; */
+
+  padding: 5px;
+  font-size: large;
+  outline: none;
+}
+
+.number-input:focus {
+  border: 2px solid #E67300;
+  /* background-color: #e7d6c0; */
+  /* border-radius: 12px; */
+}
+
+.inline-button-text {
+  display: flex;
+  align-items: center;
+  padding-bottom: 2px;
+  border-bottom: 1px solid #b8b8b8;
+}
+
+.expand-button {
+  color: black;
+  font-family: Arial;
+  font-size: 20px;
+  font-weight: 300;
+
+  /* background-color: #b8b8b8; */
+  border: solid black 2px;
+  border-radius: 8px;
+
+  outline:none;
+
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  text-align: center;
+
+  /* padding: 8px; */
+  margin-right: 10px;
+  line-height: 20px;
+  width: 30px;
+  height: 30px;
+}
+
+
+
+
+.submit-button {
+  color: black;
+  font-family: Helvetica;
+  font-size: 20px;
+  font-weight: 100;
+  text-align: center;
+
+  padding: 4px 8px;
+  width: 60%;
+  margin: 0 1vh;
+
+  border-radius: 8px;
+  border: solid black 2px;
+
+  background-color: white;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  outline: none;
+}
+
+.submit-button:hover {
+  background: #eeeeee;
+  border: solid black 2px;
+  border-radius: 8px;
+  text-decoration: none;
+}
+
+
+/*
+====================
+====================
+     Output Block
+====================
+*/
 .output-block {
   /* width: 100%; */
   display:flex;
@@ -100,62 +223,7 @@ body {
   text-align: right;
 }
 
-.fire-input {
-  /* padding: 100px; */
-  border-collapse:separate; 
-
-  /* border-spacing: 100px 100px; */
-}
-
-.input-label{
-  font-weight: bolder;
-  text-align: right;
-}
-
-.fire-input>td {
-  padding: 5px 8px;
-}
-
-.number-input{
-  border: 2px solid #5B4421;
-  background-color: #f5eee5;
-  border-radius: 10px;
-  outline: none;
-}
-
-.number-input:focus {
-  border: 2px solid #5B4421;
-  /* background-color: #e7d6c0; */
-  /* border-radius: 12px; */
-}
 
 
 
 
-
-.submit-button {
-  -webkit-border-radius: 20px;
-  -moz-border-radius: 20px;
-  border-radius: 20px;
-  color: #5B4421;
-  font-family: Helvetica;
-  font-size: 20px;
-  font-weight: 100;
-  padding: 2px 8px;
-  background-color: #E0CAAE;
-  border: solid #5B4421 3px;
-  text-decoration: none;
-  display: inline-block;
-  cursor: pointer;
-  text-align: center;
-  outline: none;
-}
-
-.submit-button:hover {
-  background: #CBA677;
-  border: solid #5B4421 3px;
-  -webkit-border-radius: 20px;
-  -moz-border-radius: 20px;
-  border-radius: 20px;
-  text-decoration: none;
-}

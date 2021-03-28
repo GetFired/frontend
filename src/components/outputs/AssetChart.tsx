@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from "react";
+// import React, {useEffect, useRef} from "react";
 import Chart from "react-apexcharts";
 import useWindowDimensions from "../helper/WindowDims"
 
@@ -24,7 +24,7 @@ const AssetChart = (): JSX.Element => {
     ]
   };
 
-  const { height, width } = useWindowDimensions();
+  const { width,height } = useWindowDimensions();
 
 
   return (

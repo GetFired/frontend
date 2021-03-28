@@ -1,6 +1,10 @@
 import React, { useCallback, } from "react";
 import '../App.css';
 
+import PercentInput from "./PercentInput";
+import MoneyInput from "./MoneyInput";
+
+
 
 interface IOnUpdateCallback {
     (value: number, idx: number): void;
@@ -17,33 +21,34 @@ interface IProps {
 
 const DataInput = (props: IProps): JSX.Element => {
     const { label, value, idx, callback, formPrefix = "$" } = props;
+    //TODO: should value be a state variable in the lower forms?
 
     // const [value, setValue] = useState<number>();
 
     const handleUpdate = useCallback(
-        (e: React.ChangeEvent<HTMLInputElement>): void => {
-            var userIn = Number(e.target.value);
-            if (userIn != null) {
-                callback(Number(e.target.value), idx);
-            }
+        (newValue: number): void => {
+                callback(newValue, idx);
         }, [callback, idx]
     );
 
+    var inputForm: JSX.Element;
+    switch(formPrefix) {
+        case '%':
+            inputForm=<PercentInput value={value} callback={handleUpdate}/>;
+            break;
+        case '$':
+            default:
+                inputForm=<MoneyInput value={value} callback={handleUpdate}/>;
+            break;
+    }
+
     return (
-        <tr className="fire-input">
-            <td className="input-label">
+        <div className="fire-input">
+            <div className="input-label">
                 {label}
-            </td>
-            <td>
-                <span>{formPrefix}</span>
-                <input 
-                    className="number-input" 
-                    type="number"
-                    value={value}
-                    onChange={handleUpdate} 
-                />
-            </td>
-        </tr>
+            </div>
+           { inputForm}
+        </div>
     );
 }
 
