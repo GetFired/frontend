@@ -17,7 +17,6 @@ const MoneyInput = (props: IProps): JSX.Element => {
     const handleUpdate = useCallback(
         (e: React.ChangeEvent<HTMLInputElement>): void => {
             let rawIn: string = e.target.value.slice(1)
-            console.log(e.target.value, rawIn);
             if (Number(rawIn) != null) {
                 callback(Number(rawIn));
             }

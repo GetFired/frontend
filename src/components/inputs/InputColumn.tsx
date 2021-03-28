@@ -2,14 +2,18 @@ import { useState, useCallback, useEffect } from "react";
 
 import '../App.css';
 import RetirementInput, { buildRetirementArguments, DefaultFireParams } from "./RetirementInput";
-import SpendingInput from "./SpendingInput";
+import SpendingInput, {DefaultCategory} from "./SpendingInput";
+import {ISpendingCategory} from "./SpendingCategory";
+
 
 const defaultAPIParams = buildRetirementArguments(DefaultFireParams);
 
 const ApiEndpoint = "https://get-fired.ue.r.appspot.com/";
 
 const InputColumn = (): JSX.Element => {
-    const [monthlySpending, setMonthlySpending] = useState<number>(0);
+    // const [monthlySpending, setMonthlySpending] = useState<any[]>([["Total", 0]]);
+    const [spendingCategories, setCategories] = useState<ISpendingCategory[]>([DefaultCategory()]);
+
     const [nonSpendingArguments, setNonSpendingArgs] = useState<any[]>(defaultAPIParams);
 
     // updates retirement parameters
@@ -18,19 +22,22 @@ const InputColumn = (): JSX.Element => {
     }, []);
 
     // updates monthly spending
-    const updateSpending = useCallback((spending: number): void => {
-        setMonthlySpending(spending);
-    }, []);
+    // const updateSpending = useCallback((spending: number): void => {
+    //     setMonthlySpending(spending);
+    // }, []);
     //api: https://reactjs.org/docs/faq-ajax.html
 
 
     const submitCallback = useCallback((): void => {
         console.log("submitted");
         console.log(nonSpendingArguments);
-        console.log(monthlySpending);
+        console.log(spendingCategories);
 
-        let query = nonSpendingArguments.map(el => el[0] + '=' + el[1]);
-        fetch(ApiEndpoint + "/month/" + query)
+        let query = nonSpendingArguments.map(el => el[0] + '=' + el[1]).join('&');
+        query += spendingCategories.map(cat => 'categories=' + cat.label + '&' + 'expenses=' + cat.spending).join('&');
+        let queryUrl = ApiEndpoint + "month?" + query;
+        console.log('querying:',queryUrl);
+        fetch(queryUrl)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -46,12 +53,12 @@ const InputColumn = (): JSX.Element => {
                     //   setError(error);
                 }
             );
-    }, [nonSpendingArguments, monthlySpending]);
+    }, [nonSpendingArguments, spendingCategories]);
 
     return (
         <div className="input-block">
             <RetirementInput updateArgs={updateNonSpendingArgs} />
-            <SpendingInput monthlySpending={monthlySpending} setMonthlySpending={updateSpending} />
+            <SpendingInput categories={spendingCategories} setCategories={setCategories} />
 
             <button className="base-button submit-button" onClick={submitCallback}>Calculate</button>
         </div>

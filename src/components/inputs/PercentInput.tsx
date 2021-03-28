@@ -21,7 +21,6 @@ const PercentInput = (props: IProps): JSX.Element => {
     const handleUpdate = useCallback(
         (e: React.ChangeEvent<HTMLInputElement>): void => {
             let rawIn: string = e.target.value.replace(unit, '');
-            console.log(e.target.value, rawIn, Number(rawIn));
             if (Number(rawIn) != null) {
                 setUsrIn(rawIn)
                 callback(Number(rawIn));

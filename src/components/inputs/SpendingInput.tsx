@@ -5,25 +5,36 @@ import '../App.css';
 import DataInput from './DataInput'
 
 
-const DefaultCategory = (): ISpendingCategory =>  ({ label: "", spending: 0 });
+export const DefaultCategory = (): ISpendingCategory =>  ({ label: "", spending: 0 });
 
 
 interface IProps {
-    monthlySpending: number;
-    setMonthlySpending: (spending: number) => void;
+    categories: ISpendingCategory[];
+    setCategories: (cats: ISpendingCategory[]) => void;
 }
 
 const SpendingInput = (props: IProps): JSX.Element => {
-    const {monthlySpending, setMonthlySpending} = props;
+    const {categories, setCategories} = props;
 
+    const [monthlySpending, setMonthlySpending] = useState<number>(0);
+    const [usingMonthlyLump, setUsingLump] = useState<boolean>(true);
     const [isExpanded, setExpanded] = useState<boolean>(true);
-    const [categories, setCategories] = useState<ISpendingCategory[]>([DefaultCategory()]);
-    const [errMsg, setErrMsg] = useState<string>();
 
     // Show or hide the categories
     const expandCallback = useCallback((): void => {
         setExpanded(!isExpanded);
     }, [isExpanded]);
+
+    // Update monthly spending listener
+    const monthlyLumpCallback = useCallback((lumpSum: number): void => {
+        setMonthlySpending(lumpSum);
+        setUsingLump(true);
+
+        // set a single category for the total monthly spending
+        setCategories([
+            {label:'total', spending:lumpSum}
+        ]);
+    }, [usingMonthlyLump]);
 
     // Add a new category
     const addCategory = useCallback((): void => {
@@ -44,8 +55,8 @@ const SpendingInput = (props: IProps): JSX.Element => {
             for(let cat of categories) {
                 newSpending += cat.spending;
             }
-            console.log("New spending:",newSpending)
             setMonthlySpending(newSpending);
+            setUsingLump(false);
         },
         [categories]
     );
@@ -82,7 +93,7 @@ const SpendingInput = (props: IProps): JSX.Element => {
                 value={monthlySpending}
                 idx={0}
                 formPrefix="$"
-                callback={setMonthlySpending}
+                callback={monthlyLumpCallback}
             />
 
             <div className="inline-button-text">
