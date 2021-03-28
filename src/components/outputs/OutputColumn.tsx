@@ -41,7 +41,7 @@ const OutputColumn = (props: IProps): JSX.Element => {
                     <div className="retirement-header">
                         <span className="Punch">{retYears} Years </span> <span className="Buildup">to Retirement</span>
                     </div>
-                    <AssetChart graphData={data.graph} />
+                    <AssetChart graphData={data.graph} fireGoal={data.goal}/>
                 </div>
             );
             break;

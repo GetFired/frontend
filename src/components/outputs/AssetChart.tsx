@@ -4,14 +4,31 @@ import useWindowDimensions from "../helper/WindowDims"
 
 interface IProps {
   graphData: number[];
+  fireGoal: number;
 }
 
 const AssetChart = (prop: IProps): JSX.Element => {
-  const {graphData} = prop;
+  const {graphData, fireGoal} = prop;
 
   var state = {
     
     options: {
+      annotations: {
+        position: 'front' ,
+        yaxis: [{
+          y: fireGoal,
+          borderColor: '#F4C63D',
+          opactity: 0.8,
+          // label: {
+          //   borderColor: '#c2c2c2',
+          //   borderWidth: 1,
+          //   borderRadius: 2,
+          //   text: 'FIRE Goal'
+          // }
+        }]
+      },
+
+
       dataLabels: {
         enabled: false,
       },
