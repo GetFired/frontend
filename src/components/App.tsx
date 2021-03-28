@@ -5,7 +5,6 @@ import InputColumn, {DataStatus} from './inputs/InputColumn';
 import OutputColumn from './outputs/OutputColumn';
 
 
-
 function App() : JSX.Element {
   const [vizData, setVizData] = useState<object>({});
   const [isLoaded, setIsLoaded] = useState<DataStatus>(DataStatus.Empty);

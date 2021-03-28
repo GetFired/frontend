@@ -7,14 +7,14 @@ interface IProps {
   fireGoal: number;
 }
 
-const AssetChart = (prop: IProps): JSX.Element => {
-  const { graphData, fireGoal } = prop;
+const TimeSpendingChart = (prop: IProps): JSX.Element => {
+  const {graphData, fireGoal} = prop;
 
   var state = {
-
+    
     options: {
       annotations: {
-        position: 'front',
+        position: 'front' ,
         yaxis: [{
           y: fireGoal,
           borderColor: '#F4C63D',
@@ -38,16 +38,14 @@ const AssetChart = (prop: IProps): JSX.Element => {
       yaxis: {
         decimalsInFloat: 0,
         forceNiceScale: true,
-
-        tooltip: {
+        
+      tooltip: {
           enabled: true,
           offsetX: 0,
-        },
       },
-      fill: {
-        type: 'gradient'
+      
       },
-      colors: ['#EF6458', '#F4C63D', '#D70206',],
+      colors: ['#EF6458','#F4C63D','#D70206',],
     },
     series: [
       {
@@ -57,16 +55,16 @@ const AssetChart = (prop: IProps): JSX.Element => {
     ]
   };
 
-  const { width, height } = useWindowDimensions();
+  const { width,height } = useWindowDimensions();
 
 
   return (
     <div className="visualization">
       <Chart
         options={state.options}
-        series={state.series} type="area" width={width * 0.5} />
+        series={state.series} type="area" width={width * 0.5 } />
     </div>
   );
 }
 
-export default AssetChart;
+export default TimeSpendingChart;
